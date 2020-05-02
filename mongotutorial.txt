@@ -1,0 +1,90 @@
+mongodb Shell Commands
+
+show dbs
+
+use {databasename}
+
+db.{tablename}.insertOne({})
+db.{tablename}.insertMany({})
+db.{tablename}.find()
+db.{tablename}.find().pretty()
+
+
+DIffrenece between BSON and JSON
+ - Almost same but there is function ObjectID which is present in BSON to store JSON data as BSON.
+
+Delete Command
+ db.student_data.deleteOne({})
+ db.student_data.deleteMany({})
+
+Update Command
+db.student_data.updateOne({isVarified: true}, {$set: {fbLoggedIn:'yes'}})
+db.student_data.updateMany({isVarified: true}, {$set: {fbLoggedIn:'yes'}})
+
+Replace all the data with passed data
+db.student_data.update({isVarified: true}, {fbLoggedIn:'yes'})
+
+db.student_data.insertMany([
+{"name" : "Audi", "color" : "Red", "cno" : "H101", "mfdcountry" : "Germany", "speed" : 75 },
+{"name" : "Swift", "color" : "Black", "cno" : "H102", "mfdcountry" : "Italy", "speed" : 60 },
+{"name" : "Maruthi800", "color" : "Blue", "cno" : "H103", "mfdcountry" : "India", "speed" : 70 },
+{"name" : "Polo", "color" : "White", "cno" : "H104", "mfdcountry" : "Japan", "speed" : 65 },
+{"name" : "Volkswagen", "color" : "JetBlue", "cno" : "H105", "mfdcountry" : "Rome", "speed" : 80 },
+{"name" : "HondaCity", "color" : "Grey", "cno" : "H106", "mfdcountry" : "Sweden", "speed" : 45 },
+{"name" : "Santro", "color" : "Pale Blue", "cno" : "H107", "mfdcountry" : "Denmark", "speed" : 55 },
+{"name" : "Zen", "speed" : 54 },
+{"name" : "SwiftDezire", "color" : "Maroon", "cno" : "H108", "mfdcountry" : "New York", "speed" : 40 },
+{"name" : "Punto", "color" : "Wine Red", "cno" : "H109", "mfdcountry" : "Paris", "speed" : 45 },
+{"name" : "WagonR" , "color" : "MetallicSilver" , "cno" : "H141" , "mfdcountry" : "Australia" , "speed" : 66},
+{"name" : "Xylo" , "color" : "JetBlue" , "cno" : "H142" , "mfdcountry" : "Europe" , "speed" : 69},
+{"name" : "Indica" , "color" : "Silver" , "cno" : "H154"},
+{"name" : "Astar" , "speed" : 79},
+{"name" : "Suzuki S-4" , "color" : "Yellow" , "cno" : "H167" , "mfdcountry" : "Italy" , "speed" : 54},
+{"name" : "Santro-Xing" , "color" : "Cyan" , "cno" : "H164" , "mfdcountry" : "Holand" , "speed" : 76},
+{"name" : "Alto800" , "color" : "JetGrey" , "cno" : "H143" , "mfdcountry" : "Austria" , "speed" : 74},
+{"name" : "Indica" , "color" : "Silver" , "cno" : "H154"},
+{"name" : "Santro-Xing" , "color" : "Cyan" , "cno" : "H164" , "mfdcountry" : "Holand" , "speed" : 76},
+{"name" : "Palio" , "color" : "Purple" , "cno" : "H183" , "mfdcountry" : "Venice" , "speed" : 82},
+{"name" : "Micra" , "color" : "Lime" , "cno" : "H186" , "mfdcountry" : "Ethopia" , "speed" : 84}
+])
+
+
+// Loop for fetching data
+db.student_data.find().forEach((student) => {printjson(student)})
+
+// Select particular fields
+db.student_data.find({}, {name: 1, email: 1})
+
+// To array
+db.student_data.find({}, {name: 1, email: 1}).toArray()
+
+// Update all data insert a new object
+db.student_data.updateMany({}, {$set: {pic: {small: "50_50.jpg", medium: "100_100.jpg", large: "150_150.jpg"}}})
+
+// Update nested object
+ db.student_data.updateMany({name: "Polo"}, {$set: {"pic.large":500}})
+
+// Where with select particular column
+db.student_data.find({"pic.large" : 500}, {"pic.large": 1}).pretty()
+
+// For single field from single result
+ db.student_data.findOne({"name": "Audi"}).lastlogin
+
+//Created new database
+use youtube
+
+ db.users.insertOne({ name: "Hitesh", earning: 3000})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("5ea85c6dafb867eb0cb34ee7")
+}
+
+// Create another collection with refrencing the current one
+ db.videos.insertOne({
+topic: "Fun",
+length: 4,
+ownerId: ObjectId("5ea85c6dafb867eb0cb34ee7")
+})
+
+// Rename a field name inside a collection
+db.course.updateMany({}, {$rename:{"title":"name"}}, false, true)
