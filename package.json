@@ -2,9 +2,9 @@
   "name": "mongo_excercise",
   "version": "1.0.0",
   "description": "fun project mongo",
-  "main": "index.js",
+  "main": "mongoexcercise.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
